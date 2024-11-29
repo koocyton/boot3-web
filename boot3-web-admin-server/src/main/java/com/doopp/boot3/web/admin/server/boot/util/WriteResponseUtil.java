@@ -1,7 +1,6 @@
 package com.doopp.boot3.web.admin.server.boot.util;
 
 import java.io.IOException;
-import java.util.function.Supplier;
 
 import com.doopp.boot3.web.core.exception.AssertException;
 import com.doopp.boot3.web.core.exception.AssertMessage;
@@ -12,10 +11,10 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class WriteResponseUtil {
 
-    public static Boolean catchWriteResponse(HttpServletResponse response, ExceptionSupplier supplier) throws IOException {
+    public static Boolean catchWriteResponse(HttpServletResponse response, ExceptionFunction func) throws IOException {
         
         try {
-            supplier.apply();
+            func.apply();
             return true;
         }
         catch (AssertException ce) {
