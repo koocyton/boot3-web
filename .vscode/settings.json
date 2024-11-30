@@ -1,5 +1,7 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
-    "java.jdt.ls.java.home": "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home",
-    "java.compile.nullAnalysis.mode": "automatic"
+    // "java.jdt.ls.java.home": "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home",
+    "java.jdt.ls.java.home": "D:\\soft\\Java\\jdk-21",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "editor.fontSize": 27
 }
