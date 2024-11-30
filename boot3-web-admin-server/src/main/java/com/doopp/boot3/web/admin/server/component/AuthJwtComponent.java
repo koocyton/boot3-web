@@ -40,7 +40,7 @@ public class AuthJwtComponent {
         return JWT.create()
                 .withClaim(USERID, adminUser.getId())
                 .withClaim(USERNAME, adminUser.getUsername())
-                .withClaim(ROLE_IDS, adminUser.getRoleIds().stream().map(String::valueOf).collect(Collectors.joining(",")))
+                .withClaim(ROLE_IDS, ObjectUtils.isEmpty(adminUser.getRoleIds()) ? "" : adminUser.getRoleIds().stream().map(String::valueOf).collect(Collectors.joining(",")))
                 .withExpiresAt(expireTime)
                 .sign(algorithm);
     }
@@ -57,7 +57,7 @@ public class AuthJwtComponent {
             JWTVerifier verifier = JWT.require(algorithm)
                     .withClaim(USERNAME, authInfo.getUsername())
                     .withClaim(USERID, authInfo.getUserId())
-                    .withClaim(ROLE_IDS, authInfo.getRoleIds()==null ? "" : authInfo.getRoleIds().stream().map(String::valueOf).collect(Collectors.joining(",")))
+                    .withClaim(ROLE_IDS, ObjectUtils.isEmpty(authInfo.getRoleIds()) ? "" : authInfo.getRoleIds().stream().map(String::valueOf).collect(Collectors.joining(",")))
                     .build();
             verifier.verify(token);
             return authInfo;
@@ -74,7 +74,7 @@ public class AuthJwtComponent {
         AuthInfo authInfo = new AuthInfo();
         authInfo.setUsername(jwt.getClaim(USERNAME).asString());
         authInfo.setUserId(jwt.getClaim(USERID).asLong());
-        String claimRoleIds = jwt.getClaim(ROLE_IDS).asString().trim();
+        String claimRoleIds = jwt.getClaim(ROLE_IDS).asString();
         authInfo.setRoleIds(ObjectUtils.isEmpty(claimRoleIds) ? new ArrayList<>() : Arrays.stream(claimRoleIds.split(",")).map(Integer::parseInt).collect(Collectors.toList()));
         authInfo.setTokenExpire(LocalDateTime.ofInstant(jwt.getExpiresAtAsInstant(), ZoneId.systemDefault()));
         return authInfo;

@@ -15,7 +15,7 @@ public class LdapComponent {
     private RestTemplate restTemplate;
 
     public String verifyTicketAndGetUsername(String ticket) {
-        return "";
+        return "yi.liu";
     }
 
     private String getTokenByTicket(String ticket) {

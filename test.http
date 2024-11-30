@@ -1,11 +1,18 @@
 # config
 @host=http://127.0.0.1:8080
-@token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVU0VSSUQiOjEsIlVTRVJOQU1FIjoieWkubGl1IiwiUk9MRV9JRFMiOiIiLCJleHAiOjE3MzI4Nzc5NjZ9.FE0l_7ZwcWzRc6kDtsyq5GJfC_fr1I7bgDQamp8er28
+@token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVU0VSSUQiOjEsIlVTRVJOQU1FIjoieWkubGl1IiwiUk9MRV9JRFMiOiIiLCJleHAiOjE3MzI5NzM3MDh9.nhqZE0n_4rqGW5Do4jTVFM7tBJVy4KTqAUMyo01FdJU
 
 ### simple query
 GET {{host}}/api/authInfo HTTP/1.1
 Content-Type: application/json
 Admin-Token: {{token}}
+
+{
+}
+
+### ssoLogin
+POST {{host}}/api/ssoLogin HTTP/1.1
+Content-Type: application/json
 
 {
 }

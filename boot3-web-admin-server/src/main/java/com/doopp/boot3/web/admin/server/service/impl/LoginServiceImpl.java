@@ -34,10 +34,13 @@ public class LoginServiceImpl implements LoginService {
     public LoginResponse ossLogin(LoginRequest request) {
         String username = ldapComponent.verifyTicketAndGetUsername(request.getOpenToken());
         // log.info("username:{}", username);
-        AdminUser adminUser = adminUserService.getOrCreateByUsername(username);
-        if (ObjectUtils.isEmpty(adminUser)) {
-            throw new AssertException(AssertMessageEnum.USER_NOT_EXIST);
-        }
+        // AdminUser adminUser = adminUserService.getOrCreateByUsername(username);
+        // if (ObjectUtils.isEmpty(adminUser)) {
+        //    throw new AssertException(AssertMessageEnum.USER_NOT_EXIST);
+        // }
+        AdminUser adminUser = new AdminUser();
+        adminUser.setId(1L);
+        adminUser.setUsername(username);
         String sessionToken = authJwtComponent.buildTokenForUser(adminUser);
         LoginResponse response = new LoginResponse();
         response.setToken(sessionToken);

@@ -9,6 +9,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.doopp.boot3.web.admin.server.boot.util.WriteResponseUtil;
 import com.doopp.boot3.web.core.exception.AssertException;
+import com.doopp.boot3.web.core.exception.AssertMessageEnum;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -39,11 +40,11 @@ public class ApiFilter extends OncePerRequestFilter {
             // not service
             String[] uriPaths = request.getRequestURI().split("/");
             if (uriPaths.length<2) {
-                throw new AssertException(ALREADY_FILTERED_SUFFIX);
+                throw new AssertException(AssertMessageEnum.ILLEGAL_REQUEST);
             }
             String verifyUri = uriPaths.length>2 ? "/" + uriPaths[1] + "/" : "/" + uriPaths[1];
             if (!acceptUriList.contains(verifyUri)) {
-                throw new AssertException(ALREADY_FILTERED_SUFFIX);
+                throw new AssertException(AssertMessageEnum.ILLEGAL_REQUEST);
             }
 
             filterChain.doFilter(request, response);
