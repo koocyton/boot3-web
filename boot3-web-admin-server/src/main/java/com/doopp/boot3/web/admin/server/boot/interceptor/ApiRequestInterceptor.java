@@ -13,7 +13,7 @@ import com.doopp.boot3.web.admin.server.pojo.dto.auth.AuthInfo;
 import com.doopp.boot3.web.admin.server.service.LoginService;
 import com.doopp.boot3.web.core.annotation.NoLogin;
 import com.doopp.boot3.web.core.exception.AssertException;
-import com.doopp.boot3.web.core.exception.AssertMessage;
+import com.doopp.boot3.web.core.exception.AssertMessageEnum;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,17 +39,24 @@ public class ApiRequestInterceptor implements HandlerInterceptor {
         if (handlerMethod == null || handlerMethod.hasMethodAnnotation(NoLogin.class)) {
             return true;
         }
-        // 需要 User Token
-        final String userToken = request.getHeader("Admin-Token");
-        // AdminUser sessionUser = loginService.getUserByToken(userToken);
-        // if (ObjectUtils.isEmpty(sessionUser)) {
-        //     throw new AssertException(AssertMessage.USER_NOT_EXIST);
-        // }
-        // request.getSession().setAttribute("SessionUser", sessionUser);
         return WriteResponseUtil.catchWriteResponse(response, ()->{
+
+            // auth info
+            final String userToken = request.getHeader("Admin-Token");
             if (ObjectUtils.isEmpty(userToken)) {
-                throw new AssertException(AssertMessage.TOKEN_NOT_EMPTY);
+                throw new AssertException(AssertMessageEnum.TOKEN_NOT_EMPTY);
             }
+
+            // session user
+            /*
+            AdminUser sessionUser = loginService.getUserByToken(userToken);
+            if (ObjectUtils.isEmpty(sessionUser)) {
+                throw new AssertException(AssertMessageEnum.USER_NOT_EXIST);
+            }
+            request.getSession().setAttribute("SessionUser", sessionUser);
+            */
+
+            // auth info
             AuthInfo authInfo = authJwtComponent.verifyTokenAndGetAuthInfo(userToken);
             request.getSession().setAttribute("AuthInfo", authInfo);
         });

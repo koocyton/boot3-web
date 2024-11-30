@@ -3,7 +3,7 @@ package com.doopp.boot3.web.admin.server.boot.util;
 import java.io.IOException;
 
 import com.doopp.boot3.web.core.exception.AssertException;
-import com.doopp.boot3.web.core.exception.AssertMessage;
+import com.doopp.boot3.web.core.exception.AssertMessageEnum;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
@@ -18,7 +18,7 @@ public class WriteResponseUtil {
             return true;
         }
         catch (AssertException ce) {
-            log.error("CodeException : ", ce);
+            log.error("AssertException : ", ce);
             writeMessageResponse(response, ce.getCode(), ce.getMessage());
             return false;
         }
@@ -30,7 +30,7 @@ public class WriteResponseUtil {
                 writeMessageResponse(response, cre.getCode(), cre.getMessage());
             }
             log.error("Exception : ", e);
-            writeMessageResponse(response, AssertMessage.SYSTEM_ERROR.getCode(), e.getMessage());
+            writeMessageResponse(response, AssertMessageEnum.SYSTEM_ERROR.getCode(), e.getMessage());
             return false;
         }
     }

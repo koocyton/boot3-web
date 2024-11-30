@@ -7,7 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.doopp.boot3.web.admin.server.pojo.dto.auth.AuthInfo;
 import com.doopp.boot3.web.admin.server.pojo.entity.AdminUser;
 import com.doopp.boot3.web.core.exception.AssertException;
-import com.doopp.boot3.web.core.exception.AssertMessage;
+import com.doopp.boot3.web.core.exception.AssertMessageEnum;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -48,10 +48,10 @@ public class AuthJwtComponent {
     public AuthInfo verifyTokenAndGetAuthInfo(String token) {
         // verify auth token
         AuthInfo authInfo = getAuthInfo(token);
-        if (authInfo.getTokenExpire().isBefore(LocalDateTime.now())) {
-            log.info("session token expiration : {}", authInfo.getTokenExpire());
-            throw new AssertException(AssertMessage.TOKEN_EXPIRATION);
-        }
+        // if (authInfo.getTokenExpire().isBefore(LocalDateTime.now())) {
+        //     log.info("session token expiration : {}", authInfo.getTokenExpire());
+        //     throw new AssertException(AssertMessageEnum.TOKEN_EXPIRATION);
+        // }
         try {
             Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
             JWTVerifier verifier = JWT.require(algorithm)
@@ -64,8 +64,8 @@ public class AuthJwtComponent {
         }
         // if exception
         catch (Exception e) {
-            log.info("{}", e.getMessage());
-            throw new AssertException(AssertMessage.TOKEN_VERIFY_FAILED);
+            log.info("token verify exception {} , now time: {}", e.getMessage(), LocalDateTime.now());
+            throw new AssertException(AssertMessageEnum.TOKEN_VERIFY_FAILED);
         }
     }
 

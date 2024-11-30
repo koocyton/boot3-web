@@ -13,7 +13,7 @@ import com.doopp.boot3.web.admin.server.pojo.response.adminlogin.LoginResponse;
 import com.doopp.boot3.web.admin.server.service.AdminUserService;
 import com.doopp.boot3.web.admin.server.service.LoginService;
 import com.doopp.boot3.web.core.exception.AssertException;
-import com.doopp.boot3.web.core.exception.AssertMessage;
+import com.doopp.boot3.web.core.exception.AssertMessageEnum;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
         // log.info("username:{}", username);
         AdminUser adminUser = adminUserService.getOrCreateByUsername(username);
         if (ObjectUtils.isEmpty(adminUser)) {
-            throw new AssertException(AssertMessage.USER_NOT_EXIST);
+            throw new AssertException(AssertMessageEnum.USER_NOT_EXIST);
         }
         String sessionToken = authJwtComponent.buildTokenForUser(adminUser);
         LoginResponse response = new LoginResponse();

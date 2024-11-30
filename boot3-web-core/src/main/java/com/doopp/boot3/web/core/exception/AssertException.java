@@ -22,6 +22,11 @@ public class AssertException extends RuntimeException {
         this.code = assertMessage.getCode();
     }
 
+    public AssertException(AssertMessageEnum assertMessageEnum) {
+        super(assertMessageEnum.getMessage());
+        this.code = assertMessageEnum.getCode();
+    }
+
     public AssertException(Exception e) {
         super(e.getMessage());
         this.code = "500";
